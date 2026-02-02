@@ -20,7 +20,7 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
   return (
     <div className="group relative flex min-w-[140px] flex-col items-center gap-2 overflow-hidden rounded-xl border border-zinc-200 bg-gradient-to-br from-white to-zinc-50 p-4 shadow-sm transition-all duration-300 hover:scale-105 hover:border-blue-300 hover:shadow-lg dark:border-zinc-700 dark:from-zinc-800 dark:to-zinc-850 dark:hover:border-blue-700">
       {/* Time */}
-      <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+      <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-200">
         {time}
       </span>
 
@@ -41,13 +41,13 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
         <span className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">
           {temp}°
         </span>
-        <span className="text-xs text-zinc-500 dark:text-zinc-400">
+        <span className="text-xs text-zinc-500 dark:text-zinc-300">
           Feels like {feelsLike}°
         </span>
       </div>
 
       {/* Weather Description */}
-      <span className="text-center text-xs capitalize text-zinc-600 dark:text-zinc-400">
+      <span className="text-center text-xs capitalize text-zinc-600 dark:text-zinc-300">
         {weather.description}
       </span>
 
@@ -55,7 +55,7 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
       <div className="my-1 h-px w-full bg-gradient-to-r from-transparent via-zinc-200 to-transparent dark:via-zinc-700"></div>
 
       {/* Additional Info */}
-      <div className="flex w-full flex-col gap-1.5 text-xs text-zinc-600 dark:text-zinc-400">
+      <div className="flex w-full flex-col gap-1.5 text-xs text-zinc-600 dark:text-zinc-300">
         <div className="flex items-center justify-between gap-2">
           <span className="flex items-center gap-1">
             <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
@@ -63,7 +63,7 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
             </svg>
             {forecast.main.humidity}%
           </span>
-          <span className="text-zinc-400 dark:text-zinc-600">humidity</span>
+          <span className="text-zinc-400 dark:text-zinc-500">humidity</span>
         </div>
         <div className="flex items-center justify-between gap-2">
           <span className="flex items-center gap-1">
@@ -72,7 +72,7 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
             </svg>
             {Math.round(forecast.wind.speed)} mph
           </span>
-          <span className="text-zinc-400 dark:text-zinc-600">wind</span>
+          <span className="text-zinc-400 dark:text-zinc-500">wind</span>
         </div>
       </div>
 
