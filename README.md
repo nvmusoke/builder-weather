@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weather Forecast App
 
-## Getting Started
+A server-side rendered Next.js application that displays a 5-day weather forecast in 3-hour increments for any US zip code.
 
-First, run the development server:
+## Features
+
+- SSR (Server-Side Rendering) for fast initial page loads
+- 5-day forecast with 3-hour intervals
+- Horizontal scroll layout for easy scanning
+- Dark mode support
+- Responsive design
+
+## Setup
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Get an OpenWeather API key
+
+1. Sign up at [OpenWeatherMap](https://openweathermap.org/api)
+2. Go to your API keys section in the dashboard
+3. Copy your API key (the free tier allows 1,000 calls/day)
+
+### 3. Configure environment variables
+
+Create a `.env.local` file in the project root:
+
+```bash
+OPENWEATHER_API_KEY=your_api_key_here
+```
+
+### 4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Enter a US zip code (e.g., 90210) in the search box
+2. Click "Get Forecast" or press Enter
+3. View the 5-day forecast organized by day with 3-hour intervals
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+### Vercel (Recommended)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Push your code to GitHub
+2. Import your repository on [Vercel](https://vercel.com)
+3. Add the `OPENWEATHER_API_KEY` environment variable in your Vercel project settings
+4. Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Other platforms
 
-## Deploy on Vercel
+Ensure your deployment platform:
+- Supports Next.js with SSR
+- Allows setting environment variables
+- Has the `OPENWEATHER_API_KEY` configured
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js 16](https://nextjs.org/) - React framework with SSR
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [OpenWeather API](https://openweathermap.org/api) - Weather data
