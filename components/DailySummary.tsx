@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { DayForecast } from "@/lib/types";
 import { getWeatherIconUrl, getWeatherAnimation } from "@/lib/weather";
@@ -9,6 +10,12 @@ interface DailySummaryProps {
 }
 
 export default function DailySummary({ forecasts }: DailySummaryProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="mb-12 overflow-hidden rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-800">
       <h2 className="mb-4 text-lg font-semibold text-zinc-800 dark:text-zinc-200">
@@ -20,22 +27,26 @@ export default function DailySummary({ forecasts }: DailySummaryProps) {
           const representative = day.forecasts.find((f) =>
             f.dt_txt.includes("12:00:00")
           ) || day.forecasts[0];
-          
+
           const weather = representative.weather[0];
           const iconUrl = getWeatherIconUrl(weather.icon);
-          
+
           // Calculate daily high/low
           const temps = day.forecasts.map((f) => f.main.temp);
           const high = Math.round(Math.max(...temps));
           const low = Math.round(Math.min(...temps));
-          
+
           // Format day name (e.g., "Mon" or "Today")
+          // Use consistent day name on server, then update on client
           const dayDate = new Date(day.date + "T12:00:00");
-          const today = new Date();
-          const isToday = dayDate.toDateString() === today.toDateString();
-          const dayLabel = isToday
-            ? "Today"
-            : dayDate.toLocaleDateString("en-US", { weekday: "short" });
+          const shortDay = dayDate.toLocaleDateString("en-US", { weekday: "short" });
+
+          let dayLabel = shortDay;
+          if (mounted) {
+            const today = new Date();
+            const isToday = dayDate.toDateString() === today.toDateString();
+            dayLabel = isToday ? "Today" : shortDay;
+          }
 
           // Get weather-specific animation
           const animationClass = getWeatherAnimation(weather.main);
