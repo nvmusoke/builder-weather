@@ -176,7 +176,8 @@ export async function getForecast(zip: string): Promise<WeatherResult> {
     }
 
     const data: ForecastResponse = await response.json();
-    const forecasts = groupForecastsByDay(data.list, data.city.timezone);
+    const allForecasts = groupForecastsByDay(data.list, data.city.timezone);
+    const forecasts = allForecasts.slice(0, 5);
 
     return {
       data: {
