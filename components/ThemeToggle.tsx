@@ -28,55 +28,22 @@ function ThemeToggleClient() {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed top-4 right-4 z-50 flex items-center gap-2 px-4 py-2 bg-zinc-200 dark:bg-zinc-800 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-zinc-300 dark:border-zinc-700"
+      className="fixed top-4 right-4 z-50 relative w-20 h-10 bg-zinc-300 dark:bg-zinc-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-zinc-400 dark:border-zinc-600"
       aria-label={`Current theme: ${theme}. Click to toggle theme.`}
-      title={`Theme: ${theme.charAt(0).toUpperCase() + theme.slice(1)}`}
+      title={`Toggle theme`}
     >
-      {/* Icon container with animations */}
-      <div className="relative w-5 h-5 flex items-center justify-center">
-        {/* Sun Icon (Light Mode) */}
-        <svg
-          className={`absolute w-5 h-5 transition-all duration-300 ${
-            theme === 'light'
-              ? 'opacity-100 rotate-0 scale-100'
-              : 'opacity-0 -rotate-90 scale-50'
-          }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-          />
-        </svg>
-
-        {/* Moon Icon (Dark Mode) */}
-        <svg
-          className={`absolute w-5 h-5 transition-all duration-300 ${
-            theme === 'dark'
-              ? 'opacity-100 rotate-0 scale-100'
-              : 'opacity-0 rotate-90 scale-50'
-          }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-          />
-        </svg>
+      {/* Slider Track with emojis */}
+      <div className="absolute inset-0 flex items-center justify-between px-2">
+        <span className="text-lg z-10">☀️</span>
+        <span className="text-lg z-10">🌙</span>
       </div>
 
-      {/* Theme Label */}
-      <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300 min-w-[60px] text-left">
-        {theme.charAt(0).toUpperCase() + theme.slice(1)}
-      </span>
+      {/* Sliding indicator */}
+      <div
+        className={`absolute top-1 w-8 h-8 bg-white dark:bg-zinc-900 rounded-full shadow-md transition-all duration-300 ease-in-out ${
+          theme === 'light' ? 'left-1' : 'left-11'
+        }`}
+      />
     </button>
   );
 }
