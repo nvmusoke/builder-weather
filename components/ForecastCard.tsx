@@ -26,13 +26,13 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
         height={50}
         unoptimized
       />
-      <span className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+      <span className="text-2xl font-bold text-zinc-900 dark:text-black">
         {Math.round(forecast.main.temp)}°F
       </span>
-      <span className="text-xs text-zinc-500 dark:text-zinc-400 capitalize text-center">
+      <span className="text-xs text-zinc-500 dark:text-black capitalize text-center">
         {weather.description}
       </span>
-      <div className="mt-2 flex flex-col gap-1 text-xs text-zinc-500 dark:text-zinc-400">
+      <div className="mt-2 flex flex-col gap-1 text-xs text-zinc-500 dark:text-black">
         <span>Humidity: {forecast.main.humidity}%</span>
         <span>Wind: {Math.round(forecast.wind.speed)} mph</span>
       </div>
