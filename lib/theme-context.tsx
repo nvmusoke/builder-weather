@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'light' | 'dark' | 'system';
+type Theme = 'light' | 'dark';
 
 interface ThemeContextType {
   theme: Theme;
@@ -12,15 +12,19 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('system');
+  const [theme, setThemeState] = useState<Theme>('light');
   const [mounted, setMounted] = useState(false);
 
-  // Initialize theme from localStorage after mount
+  // Initialize theme from localStorage or system preference after mount
   useEffect(() => {
     setMounted(true);
     const stored = localStorage.getItem('theme') as Theme | null;
-    if (stored && ['light', 'dark', 'system'].includes(stored)) {
+    if (stored && ['light', 'dark'].includes(stored)) {
       setThemeState(stored);
+    } else {
+      // Default to system preference
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setThemeState(systemPrefersDark ? 'dark' : 'light');
     }
   }, []);
 
@@ -29,27 +33,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (!mounted) return;
 
     const root = document.documentElement;
-    
-    const applyTheme = (isDark: boolean) => {
-      if (isDark) {
-        root.classList.add('dark');
-      } else {
-        root.classList.remove('dark');
-      }
-    };
 
     if (theme === 'dark') {
-      applyTheme(true);
-    } else if (theme === 'light') {
-      applyTheme(false);
+      root.classList.add('dark');
     } else {
-      // System mode - listen to OS preference
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      applyTheme(mediaQuery.matches);
-
-      const listener = (e: MediaQueryListEvent) => applyTheme(e.matches);
-      mediaQuery.addEventListener('change', listener);
-      return () => mediaQuery.removeEventListener('change', listener);
+      root.classList.remove('dark');
     }
   }, [theme, mounted]);
 
