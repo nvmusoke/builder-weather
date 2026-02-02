@@ -31,7 +31,7 @@ export default function ForecastCard({ forecast }: ForecastCardProps) {
           width={64}
           height={64}
           unoptimized
-          className="animate-float drop-shadow-md"
+          className={`${animationClass} drop-shadow-md`}
         />
       </div>
 
