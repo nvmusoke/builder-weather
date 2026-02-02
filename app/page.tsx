@@ -117,12 +117,12 @@ export default function Home() {
             <h2 className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
               Recent Searches
             </h2>
-            <div className="space-y-2">
+            <div className="flex flex-wrap gap-2">
               {recentSearches.map((zipCode) => (
                 <button
                   key={zipCode}
                   onClick={() => handleRecentSearchClick(zipCode)}
-                  className="w-full text-left px-4 py-3 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-750 hover:border-zinc-300 dark:hover:border-zinc-600 transition-colors text-zinc-900 dark:text-zinc-100"
+                  className="px-4 py-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-750 hover:border-zinc-300 dark:hover:border-zinc-600 transition-colors text-sm text-zinc-900 dark:text-zinc-100"
                 >
                   {zipCode}
                 </button>
