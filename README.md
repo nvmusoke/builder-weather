@@ -22,7 +22,7 @@ npm install
 
 1. Sign up at [OpenWeatherMap](https://openweathermap.org/api)
 2. Go to your API keys section in the dashboard
-3. Copy your API key (the free tier allows 1,000 calls/day)
+3. Copy your API key
 
 ### 3. Configure environment variables
 
@@ -45,22 +45,6 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 1. Enter a US zip code (e.g., 90210) in the search box
 2. Click "Get Forecast" or press Enter
 3. View the 5-day forecast organized by day with 3-hour intervals
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import your repository on [Vercel](https://vercel.com)
-3. Add the `OPENWEATHER_API_KEY` environment variable in your Vercel project settings
-4. Deploy
-
-### Other platforms
-
-Ensure your deployment platform:
-- Supports Next.js with SSR
-- Allows setting environment variables
-- Has the `OPENWEATHER_API_KEY` configured
 
 ## Tech Stack
 
