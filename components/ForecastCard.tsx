@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ForecastItem } from "@/lib/types";
-import { getWeatherIconUrl, formatTime } from "@/lib/weather";
+import { getWeatherIconUrl, formatTime, getWeatherAnimation } from "@/lib/weather";
 
 interface ForecastCardProps {
   forecast: ForecastItem;
