@@ -4,12 +4,22 @@ import { useTheme } from '@/lib/theme-context';
 import { useEffect, useState } from 'react';
 
 export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Don't render until mounted to avoid hydration mismatch and SSR issues
+  if (!mounted) {
+    return null;
+  }
+
+  return <ThemeToggleClient />;
+}
+
+function ThemeToggleClient() {
+  const { theme, setTheme } = useTheme();
 
   const cycleTheme = () => {
     if (theme === 'system') {
@@ -20,13 +30,6 @@ export default function ThemeToggle() {
       setTheme('system');
     }
   };
-
-  // Don't render until mounted to avoid hydration mismatch
-  if (!mounted) {
-    return (
-      <div className="fixed top-4 right-4 z-50 w-32 h-10 bg-zinc-200 dark:bg-zinc-800 rounded-full" />
-    );
-  }
 
   return (
     <button
