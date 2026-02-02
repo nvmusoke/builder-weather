@@ -6,12 +6,13 @@ import { getWeatherIconUrl, formatTime } from "@/lib/weather";
 
 interface ForecastCardProps {
   forecast: ForecastItem;
+  timezone: number;
 }
 
-export default function ForecastCard({ forecast }: ForecastCardProps) {
+export default function ForecastCard({ forecast, timezone }: ForecastCardProps) {
   const weather = forecast.weather[0];
   const iconUrl = getWeatherIconUrl(weather.icon);
-  const time = formatTime(forecast.dt_txt);
+  const time = formatTime(forecast.dt, timezone);
 
   return (
     <div className="flex flex-col items-center gap-1 rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-700 dark:bg-zinc-800 min-w-[120px]">

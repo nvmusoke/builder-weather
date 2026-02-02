@@ -15,20 +15,35 @@ function isValidZipCode(zip: string): boolean {
 }
 
 /**
- * Groups forecast items by day
+ * Converts a UTC timestamp to a Date adjusted for the location's timezone
  */
-export function groupForecastsByDay(forecasts: ForecastItem[]): DayForecast[] {
+function getLocalDate(utcTimestamp: number, timezoneOffset: number): Date {
+  // Apply timezone offset to get local time at the location
+  return new Date((utcTimestamp + timezoneOffset) * 1000);
+}
+
+/**
+ * Groups forecast items by day using the location's timezone
+ */
+export function groupForecastsByDay(
+  forecasts: ForecastItem[],
+  timezoneOffset: number
+): DayForecast[] {
   const grouped = new Map<string, ForecastItem[]>();
 
   for (const forecast of forecasts) {
-    const date = forecast.dt_txt.split(" ")[0];
-    const existing = grouped.get(date) || [];
+    const localDate = getLocalDate(forecast.dt, timezoneOffset);
+    // Use UTC methods since we've already applied the offset
+    const dateKey = localDate.toISOString().split("T")[0];
+    const existing = grouped.get(dateKey) || [];
     existing.push(forecast);
-    grouped.set(date, existing);
+    grouped.set(dateKey, existing);
   }
 
   return Array.from(grouped.entries()).map(([date, items]) => {
-    const dateObj = new Date(date + "T12:00:00");
+    // Parse the date key and format for display
+    const [year, month, day] = date.split("-").map(Number);
+    const dateObj = new Date(year, month - 1, day);
     return {
       date,
       dayName: dateObj.toLocaleDateString("en-US", {
@@ -49,15 +64,20 @@ export function getWeatherIconUrl(iconCode: string): string {
 }
 
 /**
- * Formats time from ISO string to readable format (e.g., "3:00 PM")
+ * Formats time from UTC timestamp to readable format using location's timezone
  */
-export function formatTime(dtTxt: string): string {
-  const date = new Date(dtTxt);
-  return date.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
+export function formatTime(
+  utcTimestamp: number,
+  timezoneOffset: number
+): string {
+  const localDate = getLocalDate(utcTimestamp, timezoneOffset);
+  // Extract hours and minutes from the adjusted UTC time
+  const hours = localDate.getUTCHours();
+  const minutes = localDate.getUTCMinutes();
+  const period = hours >= 12 ? "PM" : "AM";
+  const displayHours = hours % 12 || 12;
+  const displayMinutes = minutes.toString().padStart(2, "0");
+  return `${displayHours}:${displayMinutes} ${period}`;
 }
 
 /**
@@ -122,7 +142,7 @@ export async function getForecast(zip: string): Promise<WeatherResult> {
     }
 
     const data: ForecastResponse = await response.json();
-    const forecasts = groupForecastsByDay(data.list);
+    const forecasts = groupForecastsByDay(data.list, data.city.timezone);
 
     return {
       data: {
