@@ -55,7 +55,7 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
       <div className="my-1 h-px w-full bg-gradient-to-r from-transparent via-zinc-200 to-transparent dark:via-zinc-700"></div>
 
       {/* Additional Info */}
-      <div className="flex w-full flex-col gap-1.5 text-xs text-zinc-600 dark:text-zinc-300">
+      <div className="flex w-full flex-col gap-1.5 text-xs text-zinc-600 dark:text-black">
         <div className="flex items-center justify-between gap-2">
           <span className="flex items-center gap-1">
             <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
@@ -63,7 +63,7 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
             </svg>
             {forecast.main.humidity}%
           </span>
-          <span className="text-zinc-400 dark:text-black">humidity</span>
+          <span className="text-zinc-400 dark:text-zinc-500">humidity</span>
         </div>
         <div className="flex items-center justify-between gap-2">
           <span className="flex items-center gap-1">
@@ -72,7 +72,7 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
             </svg>
             {Math.round(forecast.wind.speed)} mph
           </span>
-          <span className="text-zinc-400 dark:text-black">wind</span>
+          <span className="text-zinc-400 dark:text-zinc-500">wind</span>
         </div>
       </div>
 
