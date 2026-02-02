@@ -6,12 +6,13 @@ import { getWeatherIconUrl, formatTime, getWeatherAnimation } from "@/lib/weathe
 
 interface ForecastCardProps {
   forecast: ForecastItem;
+  timezone: number;
 }
 
-export default function ForecastCard({ forecast }: ForecastCardProps) {
+export default function ForecastCard({ forecast, timezone }: ForecastCardProps) {
   const weather = forecast.weather[0];
   const iconUrl = getWeatherIconUrl(weather.icon);
-  const time = formatTime(forecast.dt_txt);
+  const time = formatTime(forecast.dt, timezone);
   const feelsLike = Math.round(forecast.main.feels_like);
   const temp = Math.round(forecast.main.temp);
   const animationClass = getWeatherAnimation(weather.main);

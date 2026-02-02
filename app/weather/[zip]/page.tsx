@@ -55,7 +55,7 @@ export default async function WeatherPage({ params }: WeatherPageProps) {
         </Link>
 
         <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mt-4 mb-2">
-          Weather Forecast for {city.name}, {city.country}
+          Weather Forecast for {city.name}
         </h1>
         <p className="text-zinc-600 dark:text-zinc-400 mb-8">Zip code: {zip}</p>
 
@@ -69,7 +69,11 @@ export default async function WeatherPage({ params }: WeatherPageProps) {
               </h2>
               <div className="flex gap-4 overflow-x-auto pb-4">
                 {day.forecasts.map((forecast) => (
-                  <ForecastCard key={forecast.dt} forecast={forecast} />
+                  <ForecastCard
+                    key={forecast.dt}
+                    forecast={forecast}
+                    timezone={city.timezone}
+                  />
                 ))}
               </div>
             </section>
