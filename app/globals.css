@@ -33,19 +33,19 @@ body {
     transform: translateY(0px);
   }
   25% {
-    transform: translateY(4px);
+    transform: translateY(8px);
   }
   50% {
     transform: translateY(0px);
   }
   75% {
-    transform: translateY(2px);
+    transform: translateY(4px);
   }
 }
 
 .animate-rain {
-  animation: rain 1.5s ease-in-out infinite;
-  filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
+  animation: rain 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(59, 130, 246, 0.5));
 }
 
 /* Clear/Sunny animation - gentle glow pulse */
