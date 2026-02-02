@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getForecast } from "@/lib/weather";
 import ForecastCard from "@/components/ForecastCard";
+import DailySummary from "@/components/DailySummary";
 
 interface WeatherPageProps {
   params: Promise<{ zip: string }>;
