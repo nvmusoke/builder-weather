@@ -14,6 +14,7 @@ export default function ForecastCard({ forecast }: ForecastCardProps) {
   const time = formatTime(forecast.dt_txt);
   const feelsLike = Math.round(forecast.main.feels_like);
   const temp = Math.round(forecast.main.temp);
+  const animationClass = getWeatherAnimation(weather.main);
 
   return (
     <div className="group relative flex min-w-[140px] flex-col items-center gap-2 overflow-hidden rounded-xl border border-zinc-200 bg-gradient-to-br from-white to-zinc-50 p-4 shadow-sm transition-all duration-300 hover:scale-105 hover:border-blue-300 hover:shadow-lg dark:border-zinc-700 dark:from-zinc-800 dark:to-zinc-850 dark:hover:border-blue-700">
