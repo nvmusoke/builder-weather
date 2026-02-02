@@ -59,6 +59,8 @@ export default async function WeatherPage({ params }: WeatherPageProps) {
         </h1>
         <p className="text-zinc-600 dark:text-zinc-400 mb-8">Zip code: {zip}</p>
 
+        <DailySummary forecasts={forecasts} />
+
         <div className="space-y-8">
           {forecasts.map((day) => (
             <section key={day.date}>
