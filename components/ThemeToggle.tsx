@@ -23,6 +23,7 @@ function ThemeToggleClient() {
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
+    console.log('Toggling theme from', theme, 'to', newTheme);
     setTheme(newTheme);
   };
 
@@ -30,8 +31,9 @@ function ThemeToggleClient() {
 
   return (
     <button
+      key={theme}
       onClick={toggleTheme}
-      className={`fixed top-4 right-4 z-50 relative w-14 h-7 rounded-full shadow-md hover:shadow-lg transition-all duration-300 border ${
+      className={`fixed top-4 right-4 z-50 w-14 h-7 rounded-full shadow-md hover:shadow-lg transition-all duration-300 border ${
         isDark
           ? 'bg-zinc-700 border-zinc-600'
           : 'bg-zinc-300 border-zinc-400'
