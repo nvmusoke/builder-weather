@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getForecast } from "@/lib/weather";
 import ForecastCard from "@/components/ForecastCard";
+import DailySummary from "@/components/DailySummary";
 
 interface WeatherPageProps {
   params: Promise<{ zip: string }>;
@@ -57,6 +58,8 @@ export default async function WeatherPage({ params }: WeatherPageProps) {
           Weather Forecast for {city.name}
         </h1>
         <p className="text-zinc-600 dark:text-zinc-400 mb-8">Zip code: {zip}</p>
+
+        <DailySummary forecasts={forecasts} />
 
         <div className="space-y-8">
           {forecasts.map((day) => (

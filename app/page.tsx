@@ -1,12 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
+const STORAGE_KEY = "recentSearches";
+
+// localStorage utilities
+const loadRecentSearches = (): string[] => {
+  try {
+    if (typeof window === "undefined") return [];
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.error("Failed to load recent searches:", error);
+    return [];
+  }
+};
+
+const saveRecentSearches = (searches: string[]): void => {
+  try {
+    if (typeof window === "undefined") return;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(searches));
+  } catch (error) {
+    console.error("Failed to save recent searches:", error);
+  }
+};
 
 export default function Home() {
   const [zip, setZip] = useState("");
   const [error, setError] = useState("");
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const router = useRouter();
+
+  // Load recent searches on mount
+  useEffect(() => {
+    setRecentSearches(loadRecentSearches());
+  }, []);
+
+  const addToRecentSearches = (zipCode: string): void => {
+    setRecentSearches((prev) => {
+      // Remove if already exists (deduplication)
+      const filtered = prev.filter((z) => z !== zipCode);
+      // Add to beginning and limit to 5
+      const updated = [zipCode, ...filtered].slice(0, 5);
+      // Save to localStorage
+      saveRecentSearches(updated);
+      return updated;
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +59,13 @@ export default function Home() {
       return;
     }
 
+    // Add to recent searches before navigating
+    addToRecentSearches(trimmedZip);
     router.push(`/weather/${trimmedZip}`);
+  };
+
+  const handleRecentSearchClick = (zipCode: string) => {
+    router.push(`/weather/${zipCode}`);
   };
 
   return (
@@ -64,6 +111,25 @@ export default function Home() {
             Get Forecast
           </button>
         </form>
+
+        {recentSearches.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
+              Recent Searches
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {recentSearches.map((zipCode) => (
+                <button
+                  key={zipCode}
+                  onClick={() => handleRecentSearchClick(zipCode)}
+                  className="px-4 py-2 bg-[#90D5FF] dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 transition-colors text-sm text-zinc-900 dark:text-zinc-100"
+                >
+                  {zipCode}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

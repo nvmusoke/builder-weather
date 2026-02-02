@@ -81,6 +81,40 @@ export function formatTime(
 }
 
 /**
+ * Returns the appropriate animation class based on weather condition
+ */
+export function getWeatherAnimation(weatherMain: string): string {
+  const condition = weatherMain.toLowerCase();
+
+  if (condition.includes("rain") || condition.includes("drizzle")) {
+    return "animate-rain";
+  }
+  if (condition.includes("clear")) {
+    return "animate-sunny";
+  }
+  if (condition.includes("cloud")) {
+    return "animate-clouds";
+  }
+  if (condition.includes("snow")) {
+    return "animate-snow";
+  }
+  if (condition.includes("thunderstorm")) {
+    return "animate-thunderstorm";
+  }
+  if (
+    condition.includes("mist") ||
+    condition.includes("fog") ||
+    condition.includes("haze") ||
+    condition.includes("smoke")
+  ) {
+    return "animate-mist";
+  }
+
+  // Default fallback
+  return "animate-float";
+}
+
+/**
  * Fetches 5-day weather forecast for a US zip code
  */
 export async function getForecast(zip: string): Promise<WeatherResult> {
@@ -142,7 +176,8 @@ export async function getForecast(zip: string): Promise<WeatherResult> {
     }
 
     const data: ForecastResponse = await response.json();
-    const forecasts = groupForecastsByDay(data.list, data.city.timezone);
+    const allForecasts = groupForecastsByDay(data.list, data.city.timezone);
+    const forecasts = allForecasts.slice(0, 5);
 
     return {
       data: {
