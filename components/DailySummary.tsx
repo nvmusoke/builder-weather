@@ -37,6 +37,9 @@ export default function DailySummary({ forecasts }: DailySummaryProps) {
             ? "Today"
             : dayDate.toLocaleDateString("en-US", { weekday: "short" });
 
+          // Get weather-specific animation
+          const animationClass = getWeatherAnimation(weather.main);
+
           return (
             <div
               key={day.date}
@@ -52,7 +55,7 @@ export default function DailySummary({ forecasts }: DailySummaryProps) {
                   width={48}
                   height={48}
                   unoptimized
-                  className="animate-float"
+                  className={animationClass}
                 />
               </div>
               <div className="flex items-baseline gap-2">
