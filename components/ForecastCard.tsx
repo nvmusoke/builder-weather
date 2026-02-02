@@ -47,7 +47,7 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
       </div>
 
       {/* Weather Description */}
-      <span className="text-center text-xs capitalize text-zinc-600 dark:text-zinc-300">
+      <span className="text-center text-xs capitalize text-zinc-600 dark:text-black">
         {weather.description}
       </span>
 
@@ -63,7 +63,7 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
             </svg>
             {forecast.main.humidity}%
           </span>
-          <span className="text-zinc-400 dark:text-zinc-500">humidity</span>
+          <span className="text-zinc-400 dark:text-black">humidity</span>
         </div>
         <div className="flex items-center justify-between gap-2">
           <span className="flex items-center gap-1">
@@ -72,7 +72,7 @@ export default function ForecastCard({ forecast, timezone }: ForecastCardProps) 
             </svg>
             {Math.round(forecast.wind.speed)} mph
           </span>
-          <span className="text-zinc-400 dark:text-zinc-500">wind</span>
+          <span className="text-zinc-400 dark:text-black">wind</span>
         </div>
       </div>
 
