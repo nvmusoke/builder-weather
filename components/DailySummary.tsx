@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { DayForecast } from "@/lib/types";
-import { getWeatherIconUrl } from "@/lib/weather";
+import { getWeatherIconUrl, getWeatherAnimation } from "@/lib/weather";
 
 interface DailySummaryProps {
   forecasts: DayForecast[];
