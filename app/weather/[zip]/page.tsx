@@ -66,7 +66,7 @@ export default async function WeatherPage({ params }: WeatherPageProps) {
               </h2>
               <div className="flex gap-4 overflow-x-auto pb-4">
                 {day.forecasts.map((forecast) => (
-                  <ForecastCard key={forecast.dt} forecast={forecast} />
+                  <ForecastCard key={forecast.dt} forecast={forecast} timezone={city.timezone} />
                 ))}
               </div>
             </section>
