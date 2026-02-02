@@ -1,12 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
+const STORAGE_KEY = "recentSearches";
+
+// localStorage utilities
+const loadRecentSearches = (): string[] => {
+  try {
+    if (typeof window === "undefined") return [];
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.error("Failed to load recent searches:", error);
+    return [];
+  }
+};
+
+const saveRecentSearches = (searches: string[]): void => {
+  try {
+    if (typeof window === "undefined") return;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(searches));
+  } catch (error) {
+    console.error("Failed to save recent searches:", error);
+  }
+};
 
 export default function Home() {
   const [zip, setZip] = useState("");
   const [error, setError] = useState("");
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const router = useRouter();
+
+  // Load recent searches on mount
+  useEffect(() => {
+    setRecentSearches(loadRecentSearches());
+  }, []);
+
+  const addToRecentSearches = (zipCode: string): void => {
+    setRecentSearches((prev) => {
+      // Remove if already exists (deduplication)
+      const filtered = prev.filter((z) => z !== zipCode);
+      // Add to beginning and limit to 5
+      const updated = [zipCode, ...filtered].slice(0, 5);
+      // Save to localStorage
+      saveRecentSearches(updated);
+      return updated;
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +59,13 @@ export default function Home() {
       return;
     }
 
+    // Add to recent searches before navigating
+    addToRecentSearches(trimmedZip);
     router.push(`/weather/${trimmedZip}`);
+  };
+
+  const handleRecentSearchClick = (zipCode: string) => {
+    router.push(`/weather/${zipCode}`);
   };
 
   return (
